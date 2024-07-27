@@ -27,7 +27,7 @@ class AuthController extends Controller
 
 
         //redirect
-        return redirect()->route("posts.index   ");
+        return redirect()->route("posts.index");
 
     }
 

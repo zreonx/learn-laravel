@@ -1,8 +1,8 @@
 <x-layout>
 
-    <h1 class="title">Register new account</h1>
-
-    <div class="mx-auto max-w-screen-sm card">
+  
+  <div class="mx-auto max-w-screen-sm card">
+      <h1 class="title">Register new account</h1>
         <form action="{{ route('register') }}" method="post">
             @csrf
             {{-- Username --}}

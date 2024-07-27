@@ -1,8 +1,8 @@
 <x-layout>
 
-    <h1 class="title">Login</h1>
-
+    
     <div class="mx-auto max-w-screen-sm card">
+        <h1 class="title">Login</h1>
         <form action="{{ route('login') }}" method="post">
             @csrf
 

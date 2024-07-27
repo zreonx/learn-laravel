@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use App\Http\Requests\StorePostRequest;
-use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -14,13 +14,15 @@ class PostController extends Controller
     public function index()
     {
 
-        $posts = Post::all();
-
+        // $posts = Post::orderBy('created_at', 'desc')->get();
+        $posts = Post::latest()->paginate(6);
     
         return view('posts.index', [
             'posts' => $posts
         ]);
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -33,9 +35,26 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePostRequest $request)
+    public function store(Request $request)
     {
-        //
+        
+        $user_id = auth()->user()->id;
+      
+
+        //Validate
+        $fields = $request->validate([
+            'title' => ['required', 'max:255'],
+            'body' => ['required']
+        ]);
+        
+
+        //Create a post
+        Auth::user()->posts()->create($fields);
+        
+
+        //redirect to dashboard
+        return back()->with('success', 'Your post was created');
+
     }
 
     /**
@@ -43,7 +62,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('posts.show', [
+            'post' => $post
+        ]);
     }
 
     /**
@@ -51,15 +72,27 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('posts.edit', [
+            'post' => $post
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePostRequest $request, Post $post)
+    public function update(Request $request, Post $post)
     {
-        //
+        //Validate
+        $fields = $request->validate([
+            'title' => ['required', 'max:255'],
+            'body' => ['required']
+        ]);
+        
+        //Update a post
+        $post->update($fields);
+
+        //redirect to dashboard
+        return redirect('dashboard')->with('success', 'Your post was updated');
     }
 
     /**
@@ -67,7 +100,13 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        //Redirect
+
+        return back()->with('delete', 'Your post was deleted');
     }
+
+
 
 }

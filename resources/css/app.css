@@ -44,7 +44,7 @@
         @apply text-slate-200 hover:bg-slate-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium;
     }
     .title {
-        @apply my-6 text-center text-3xl font-bold leading-9 text-slate-900;
+        @apply my-6 text-3xl font-bold leading-9 text-slate-900;
     }
     .error {
         @apply text-xs text-red-500 mt-1;
@@ -71,7 +71,7 @@
         @apply w-8 h-8 overflow-auto rounded-full bg-slate-100 focus:outline-none focus:ring-1 focus:ring-slate-100 focus:ring-offset-2 focus:ring-offset-slate-800;
     }
     .card {
-        @apply border border-slate-100 px-10 py-8 shadow-lg rounded-lg;
+        @apply border border-slate-100 px-10 pt-5 pb-6 shadow-lg rounded-lg;
     }
 
     .btn {

@@ -4,10 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
-class PostController extends Controller
+class PostController extends Controller implements HasMiddleware
 {
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('auth', only: ['store']),
+            new Middleware('auth', except: ['index', 'show'])
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
@@ -40,16 +52,26 @@ class PostController extends Controller
         
         $user_id = auth()->user()->id;
       
-
         //Validate
-        $fields = $request->validate([
+        $request->validate([
             'title' => ['required', 'max:255'],
-            'body' => ['required']
+            'body' => ['required'],
+            'image' => ['nullable', 'file', 'max:10000' ,'mimes:png,jpg,webp']
         ]);
-        
 
+        //Store image if exists
+        $path = null;
+        if($request->hasFile('image')) {
+            $path = Storage::disk('public')->put('/posts_images', $request->image);
+
+        }
+        
         //Create a post
-        Auth::user()->posts()->create($fields);
+        Auth::user()->posts()->create([
+            'title' => $request->title,
+            'body' => $request->body,
+            'image' => $path
+        ]);
         
 
         //redirect to dashboard
@@ -72,6 +94,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+
+        Gate::authorize('modify', $post);
+        
         return view('posts.edit', [
             'post' => $post
         ]);
@@ -82,6 +107,8 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        Gate::authorize('modify', $post);
+
         //Validate
         $fields = $request->validate([
             'title' => ['required', 'max:255'],

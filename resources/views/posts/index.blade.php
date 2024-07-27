@@ -2,6 +2,8 @@
 
     <h1 class="title">Latest Post</h1>
 
+   
+
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
         @foreach ($posts as $post )

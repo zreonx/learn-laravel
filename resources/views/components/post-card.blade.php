@@ -4,14 +4,13 @@
 
     @if ($post->image)
     
-    
-    <div class="h-50 overflow-hidden rounded-md p-0 my-5">
-        <img class=" object-cover h-[200px] w-full transition-all hover:scale-105 duration-200" src="{{ asset("storage/" . $post->image) }}" alt="">
-    </div>
-    @else
-    <div class="h-50 overflow-hidden rounded-md p-0 my-5">
-        <img class=" object-cover h-[200px] w-full transition-all hover:scale-105 duration-200" src="https://liftlearning.com/wp-content/uploads/2020/09/default-image.png" alt="">
-    </div>
+        <div class="h-50 overflow-hidden rounded-md p-0 my-5">
+            <img class=" object-cover h-[200px] w-full transition-all shadow-md hover:scale-105 duration-200" src="{{ asset("storage/" . $post->image) }}" alt="">
+        </div>
+        @else
+        <div class="h-50 overflow-hidden rounded-md p-0 my-5">
+            <img class=" object-cover h-[200px] w-full transition-all shadow-md hover:scale-105 duration-200" src="https://liftlearning.com/wp-content/uploads/2020/09/default-image.png" alt="">
+        </div>
 
     @endif
     {{-- Title --}}

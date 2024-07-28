@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserSubscribed;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -28,6 +29,12 @@ class AuthController extends Controller
         Auth::login($user);
 
         event(new Registered($user));
+
+        //if the user checked the subcribe to newsletter trigger this event
+
+        if($request->subscribe) {
+            event(new UserSubscribed($user));
+        }
 
         //redirect
         return redirect()->route("dashboard");

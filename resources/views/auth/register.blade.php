@@ -48,6 +48,11 @@
                 @enderror
             </div>
 
+            <div class="mb-4 flex gap-2">
+              <input type="checkbox" name="subscribe" id="subscribe">
+              <label for="subscribe">Subscribe to our newsletter</label>
+            </div>
+
             <button x-ref="btn" class="btn" type="submit">Register</button>
         </form>
 

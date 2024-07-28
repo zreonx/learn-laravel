@@ -1,15 +1,13 @@
 <x-layout>
 
-    
-    <div class="mx-auto max-w-screen-sm card">
-        <h1 class="title">Login</h1>
-          {{-- Session messages --}}
-            @if (session('status'))
-                <x-flash-msg msg="{{ session('status') }}"/>
-            @endif
-        <form action="{{ route('login') }}" method="post">
+  
+  <div class="mx-auto max-w-screen-sm card">
+      <h1 class="title">Reset your password</h1>
+        <form action="{{ route('password.update') }}" method="post">
             @csrf
 
+            <input type="hidden" name="token" value="{{ $token }}">
+           
             {{-- Email --}}
             <div class="mb-4">
                 <label for="email">Email</label>
@@ -30,25 +28,19 @@
                   <p class="error">{{ $message }}</p>
                 @enderror
             </div>
-
-
-            {{-- Rememer Checkbox --}}
-            <div class="flex justify-between">
-                <div class="mb-4 flex gap-1">
-                    <input type="checkbox" name="remember" id="remember">
-                    <label for="remember">Remember me</label>
-                </div>
-                <div>
-                    <a class="text-sm text-blue-400 hover:text-blue-500" href="{{ route("password.request") }}">Forgot your password?</a>
-                </div>
+            {{-- Confirm Password --}}
+            <div class="mb-4">
+                <label for="password_confirmation">Confirm Password</label>
+                <input type="password" name="password_confirmation" class="input @error('password_confirmation')
+                 !ring-red-500 
+                @enderror ">
+                @error('password_confirmation')
+                  <p class="error">{{ $message }}</p>
+                @enderror
             </div>
 
-              @error('failed')
-                  <p class="error">{{ $message }}</p>
-              @enderror
 
-
-            <button class="btn" type="submit">Login</button>
+            <button  class="btn" type="submit">Reset Password</button>
         </form>
 
     </div>

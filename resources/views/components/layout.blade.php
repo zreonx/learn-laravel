@@ -54,8 +54,8 @@
             Alpine.data('formSubmit', () => ({
                 submit() {
                     this.$refs.btn.disabled = true;
-                    this.$refs.btn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
-                    this.$refs.btn.classList.add('bg-indigo-400');
+                    // this.$refs.btn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
+                    // this.$refs.btn.classList.add('bg-indigo-400');
                     this.$refs.btn.innerHTML =
                         `<span class="absolute left-2 top-1/2 -translate-y-1/2 transform">
                         <i class="fa-solid fa-spinner animate-spin"></i>
